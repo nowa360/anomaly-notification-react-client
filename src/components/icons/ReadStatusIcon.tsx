@@ -1,7 +1,5 @@
-import React from "react";
-
-import IconEnvelopeOpen from "./IconEnvelopeOpen";
 import IconEnvelopeClose from "./IconEnvelopeClose";
+import IconEnvelopeOpen from "./IconEnvelopeOpen";
 
 interface ReadStatusIconProps {
     isRead: boolean;

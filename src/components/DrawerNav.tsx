@@ -1,31 +1,44 @@
-import React from "react";
+import { useCallback, useState } from "react";
 
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import {
-  Drawer,
   Button,
+  Drawer,
   Typography,
-  List,
 } from "@material-tailwind/react";
 
-import IconError from "./icons/IconCloseBtn";
 import IconCloseBtn from "./icons/IconCloseBtn";
-import NotificationListItem from "./NotificationListItem";
-import NotificationContainer from "./NotificationContainer";
 import NotificationList from "./NotificationList";
-import { mockNotificationData } from "../data/notification";
+import { notificationDrawerWidth } from "../utility/notification-utility";
+import { useMarkAllAsReadPost } from "../hooks/useMarkAllAsReadPost";
+import { useMarkAsReadPost } from "../hooks/useMarkAsReadPost";
 import { useNotificationContext } from "../provider/NotificationProvider";
 
 const DrawerNav = () => {
-
-  const {allRecords} = useNotificationContext();
-  const [open, setOpen] = React.useState(false);
+  const {
+    allUnreadRecords,
+    markedRecords,
+  } = useNotificationContext();
+  const {
+    postMarkAllAsRead,
+  } = useMarkAllAsReadPost();
+  const { postMarkAsRead } = useMarkAsReadPost();
+  const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+
+  const handleMarkCheckedItemsAsRead = useCallback(() => {
+    postMarkAsRead();
+  }, [postMarkAsRead])
+
+  const handleMarkAllAsRead = useCallback(() => { 
+    postMarkAllAsRead()
+  },[postMarkAllAsRead])
+
+
   return (
-    <>
+    <div className="drawer-main h-96">
       <Button onClick={openDrawer}>Check Notifications</Button>
-      <Drawer open={open} onClose={closeDrawer} size={600}>
+      <Drawer open={open} onClose={closeDrawer} size={notificationDrawerWidth}>
         <div className="mb-2 flex items-center justify-between p-4">
           <Typography variant="h3" color="blue-gray">
             Anomaly Notification
@@ -34,15 +47,31 @@ const DrawerNav = () => {
         </div>
 
         {/* TODO: can render on !error and !isLoading if not using mock data */}
+        <div  className="overflow-y-auto min-h-48 max-h-80">
         {
-          allRecords.length === 0 ? <></> : 
-          <NotificationList notificationDataArray={allRecords} /> 
+          allUnreadRecords.length === 0 ? <></> :
+            <NotificationList
+              notificationDataArray={allUnreadRecords} />
         }
-        <Button className="mt-3 ml-5" size="sm">
-          Mark all as read
-        </Button>
+        </div>
+        <div className="h-full min-h-[60px]">
+          <Button
+            className="mt-3 ml-5"
+            disabled={markedRecords.length === 0}
+            onClick={handleMarkCheckedItemsAsRead}
+            size="sm">
+            Mark checked items as read
+          </Button>
+          <Button
+            className="mt-3 ml-5"
+            disabled={allUnreadRecords.length === 0}
+            onClick={handleMarkAllAsRead}
+            size="sm">
+            Mark all as read
+          </Button>
+        </div>
       </Drawer>
-    </>
+    </div>
   );
 }
 

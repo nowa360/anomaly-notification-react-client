@@ -1,33 +1,37 @@
-import React from "react";
+import { useParams } from "react-router-dom";
 import {
-  
-  Typography,
-  
+    Typography,
 } from "@material-tailwind/react";
 
-import IconEnvelopeOpen from "./icons/IconEnvelopeOpen";
-
-import { NotificationObjType } from "../types/notificationTypes";
 import AlertIcon from "./icons/NotificationTypeIcon";
+import { getNotificationByRecordId } from "../utility/notification-utility";
+import { useNotificationContext } from "../provider/NotificationProvider";
+import ReadStatusIcon from "./icons/ReadStatusIcon";
 
-const NotificationContainer = ({
-    description,
-    isRead,
-    recordId,
-    title,
-    msgType,
-}: NotificationObjType) => {
+const NotificationContainer = () => {
+    const { recordId } = useParams();
+    const {
+        allRecords,
+    } = useNotificationContext();
+
+    if (!recordId) return (<div>No record id</div>)
+    const {
+        description,
+        isRead,
+        msgType,
+        title,
+    } = { ...getNotificationByRecordId(+recordId, allRecords) }
+    const isReadStatus = isRead ? isRead : false
     return (
-        <div>
-            <AlertIcon notificationMsgType={msgType}/>
-            <IconEnvelopeOpen  />
-            <Typography variant="h4" color="blue-gray">
-                {title}
+        <div className="mt-10">
+            <AlertIcon notificationMsgType={msgType} />
+            <Typography className="mt-2" variant="h1">{recordId}. {title}</Typography>
+            <Typography className="mb-2">
+                {msgType}: {description}
             </Typography>
-            <Typography>
-                {description} {recordId}
-            </Typography>
-          </div>
+            <ReadStatusIcon isRead={isReadStatus} />
+
+        </div>
     );
 }
 

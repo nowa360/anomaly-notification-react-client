@@ -1,32 +1,23 @@
-import React, {useCallback} from "react";
+import { useCallback } from "react";
+
 import {
     Checkbox,
-    Drawer,
-    Button,
-    Typography,
-    Textarea,
-    IconButton,
-    List,
     ListItem,
     ListItemPrefix,
     ListItemSuffix,
-    Chip,
+    Typography,
 } from "@material-tailwind/react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import IconInfo from "./icons/IconInfo";
-import IconError from "./icons/InfoError";
-import IconWarning from "./icons/IconWarning";
-import IconEnvelopeClose from "./icons/IconEnvelopeClose";
-import IconEnvelopeOpen from "./icons/IconEnvelopeOpen";
-
-import { NotificationObjType } from "../types/notificationTypes";
 import AlertIcon from "./icons/NotificationTypeIcon";
 import ReadStatusIcon from "./icons/ReadStatusIcon";
+import { NotificationObjType } from "../types/notificationTypes";
+import { notificationDrawerWidth } from "../utility/notification-utility";
+import { useMarkAsReadPost } from "../hooks/useMarkAsReadPost";
 import { useNotificationContext } from "../provider/NotificationProvider";
 
 interface NotificationListItemProps extends NotificationObjType {
-    key: string | number;
+    //key: string | number;
 }
 
 const NotificationListItem = ({
@@ -37,45 +28,51 @@ const NotificationListItem = ({
     title
 }: NotificationListItemProps) => {
     const {
-        markedRecords, 
+        markedRecords,
         setCurrentRecord,
         setMarkedRecords,
     } = useNotificationContext();
 
-    const notificationCheckboxOnClick = () => {
-        if (markedRecords.has(recordId)) {
-            setMarkedRecords((prev: Set<number>) => {
-                prev.delete(recordId);
-                return prev;
-            })
+    const {
+        postMarkAsRead
+    } = useMarkAsReadPost()
+    const notificationCheckboxOnClick = (event: any) => {
+        event.stopPropagation();
+        if (markedRecords.includes(recordId)) {
+            setMarkedRecords(markedRecords.filter(record => record !== recordId))
         } else {
-            setMarkedRecords((prev: Set<number>) => {
-                prev.add(recordId);
-                return prev;
-            })
+            setMarkedRecords(markedRecords.concat(recordId))
         }
     }
 
-    const notificationOnClick = () => {
+    const notificationOnClick = useCallback((event: any) => {
+        event.preventDefault();
         setCurrentRecord(recordId)
-    }
+        postMarkAsRead([recordId])
+      }, [postMarkAsRead, recordId, setCurrentRecord])
 
     return (
-        <ListItem>
+        <ListItem onClick={notificationOnClick}>
             <ListItemPrefix>
                 <Checkbox crossOrigin="" ripple={true} onClick={notificationCheckboxOnClick} />
             </ListItemPrefix>
-            <Link to={`/notification/${recordId}`} onClick={notificationOnClick}>
-                <AlertIcon notificationMsgType={msgType} />
-                <Typography variant="h4" color="blue-gray">
-                    {title} {description}
-                </Typography>
+            <Link to={`/notification/${recordId}`} >
+                <div className={`flex gap-2 w-[${notificationDrawerWidth-200}px]`}>
+                    <AlertIcon notificationMsgType={msgType} />
+                    <Typography variant="h4" color="blue-gray" className=" truncate ">
+                        {title}
+                    </Typography>
+                </div>
+                <div className={`flex gap-2 w-[${notificationDrawerWidth-200}px]`}>
+                    <Typography color="blue-gray" className="truncate ">
+                        {description}
+                    </Typography>
+                </div>
             </Link>
-            <ListItemSuffix>
+            <ListItemSuffix >
                 <ReadStatusIcon isRead={isRead} />
             </ListItemSuffix>
         </ListItem>
-
     );
 }
 

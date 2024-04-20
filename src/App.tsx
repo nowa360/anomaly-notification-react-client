@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import DrawerNav from './components/DrawerNav';
 import NotificationRouter from './components/NotificationRouter';
-import { NotificationProvider, useNotificationContext } from './provider/NotificationProvider';
+import { NotificationProvider } from './provider/NotificationProvider';
 
 import './App.css';
 

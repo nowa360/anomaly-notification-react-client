@@ -1,18 +1,19 @@
-import {createContext} from "react";
-
-const MOCK_ORG_ID = "mockOrg1314"
+import { NotificationObjType } from "../types/notificationTypes";
+import { MOCK_ORG_ID } from "../data/notification";
 
 export const notificatioDefaultContext = {
     allRecords: [{}],
-    allUnreadRecords: {},
+    allUnreadRecords: [{}],
     currentRecord: 0,
-    markedRecords: new Set(),
-    orgId: 0,
-    // setAllRecords: () => {},
-    // setAllUnreadRecords: () => {},
-    setCurrentRecord: (record: number) => {},
-    setMarkedRecords: (record: any) => {},
-    // setOrgId: () => {},
-    // addMarkedRecords: (record: any) => record,
-    // removeMarkedRecords: (record: any) => record,
+    isLoadingGetAllRecords: false,
+    isLoadingGetUnreadRecords: false,
+    markedRecords: new Array<number>(),
+    orgId: MOCK_ORG_ID,
+    setAllRecords: (allRecords: Array<NotificationObjType>) => { },
+    setAllUnreadRecords: (unreadRecords: Array<NotificationObjType>) => { },
+    setCurrentRecord: (record: number) => { },
+    setIsLoadingGetAllRecords: (isLoadingGetAllRecords: boolean) => { },
+    setIsLoadingGetUnreadRecords: (isLoadingGetUnreadRecords: boolean) => { },
+    setMarkedRecords: (records: Array<number>) => { },
+    setOrgId: (orgId: number) => { },
 }
