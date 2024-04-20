@@ -1,5 +1,5 @@
-import { NotificationObjType } from "../types/notificationTypes";
 import { MOCK_ORG_ID } from "../data/notification";
+import { NotificationObjType } from "../types/notificationTypes";
 
 export const notificatioDefaultContext = {
     allRecords: [{}],

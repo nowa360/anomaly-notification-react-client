@@ -2,20 +2,18 @@ import { useState } from "react";
 
 import { markAllUnreadRecordsAsReadUrl } from "../data/urls";
 import { setAllRecordsToIsReadStatus } from "../utility/notification-utility";
-import { useNotificationContext } from "../provider/NotificationProvider";
 
-
-export const useMarkAllAsReadPost = () => {
-    const {
-        allRecords,
-        orgId,
-        setAllRecords,
-        setAllUnreadRecords,
-        setMarkedRecords,
-    } = useNotificationContext();
-    const [isLoading, setIsLoading] = useState(true)
-    const [hasError, setHasError] = useState(false)
-    const [data, setData] = useState({})
+export const useMarkAllAsReadPost = (
+        allRecords: any,
+        orgId: number,
+        setAllRecords: any,
+        setAllUnreadRecords: any,
+        setMarkedRecords: any,
+) => {
+    
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [hasError, setHasError] = useState<boolean>(false)
+    const [data, setData] = useState<any>({})
 
     const postMarkAllAsRead = () => {
         fetch(markAllUnreadRecordsAsReadUrl(orgId), {
@@ -37,7 +35,7 @@ export const useMarkAllAsReadPost = () => {
                 // TODO: Trigger alert service here
 
                 // Error here expected if backend not hooked
-                console.error('POST: Error marking all notifications as read:', error)
+                console.error('POST__mark_all_unread_records: No backend hooked')
                 setHasError(true)
             })
             // TODO: remove finally-clause upon attaching backend

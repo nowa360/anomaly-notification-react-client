@@ -41,7 +41,7 @@ export const useMarkAsReadPost = () => {
                 // TODO: Trigger alert service here
 
                 // Error here expected if backend not hooked
-                console.error('POST: Error marking checked notifications as read:', error)
+                console.error('POST__mark_as_read: No backend hooked')
                 setHasError(true)
             })
             // TODO: remove finally-clause upon attaching backend

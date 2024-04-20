@@ -1,5 +1,5 @@
-import { Typography } from "@material-tailwind/react";
 import { Routes, Route } from "react-router-dom";
+import { Typography } from "@material-tailwind/react";
 
 import NotificationContainer from "./NotificationContainer";
 

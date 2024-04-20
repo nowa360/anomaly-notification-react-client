@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 import {
   Button,
@@ -13,46 +13,61 @@ import { useMarkAllAsReadPost } from "../hooks/useMarkAllAsReadPost";
 import { useMarkAsReadPost } from "../hooks/useMarkAsReadPost";
 import { useNotificationContext } from "../provider/NotificationProvider";
 
-const DrawerNav = () => {
+interface DrawerNavProps {
+  isDrawerOpen: boolean;
+  setIsDrawerOpen: (open: boolean) => void;
+}
+
+const DrawerNav = ({
+  isDrawerOpen,
+  setIsDrawerOpen,
+}: DrawerNavProps) => {
   const {
+    allRecords,
+    orgId,
+    setAllRecords,
+    setAllUnreadRecords,
+    setMarkedRecords,
     allUnreadRecords,
     markedRecords,
   } = useNotificationContext();
   const {
     postMarkAllAsRead,
-  } = useMarkAllAsReadPost();
+  } = useMarkAllAsReadPost(
+    allRecords,
+    orgId,
+    setAllRecords,
+    setAllUnreadRecords,
+    setMarkedRecords
+  );
   const { postMarkAsRead } = useMarkAsReadPost();
-  const [open, setOpen] = useState(false);
-  const openDrawer = () => setOpen(true);
-  const closeDrawer = () => setOpen(false);
 
   const handleMarkCheckedItemsAsRead = useCallback(() => {
     postMarkAsRead();
   }, [postMarkAsRead])
 
-  const handleMarkAllAsRead = useCallback(() => { 
+  const handleMarkAllAsRead = useCallback(() => {
     postMarkAllAsRead()
-  },[postMarkAllAsRead])
+  }, [postMarkAllAsRead])
 
 
   return (
     <div className="drawer-main h-96">
-      <Button onClick={openDrawer}>Check Notifications</Button>
-      <Drawer open={open} onClose={closeDrawer} size={notificationDrawerWidth}>
+      <Drawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} size={notificationDrawerWidth}>
         <div className="mb-2 flex items-center justify-between p-4">
           <Typography variant="h3" color="blue-gray">
-            Anomaly Notification
+            Anomaly Notifications
           </Typography>
-          <IconCloseBtn onClickClose={closeDrawer} />
+          <IconCloseBtn onClickClose={() => setIsDrawerOpen(false)} />
         </div>
 
         {/* TODO: can render on !error and !isLoading if not using mock data */}
-        <div  className="overflow-y-auto min-h-48 max-h-80">
-        {
-          allUnreadRecords.length === 0 ? <></> :
-            <NotificationList
-              notificationDataArray={allUnreadRecords} />
-        }
+        <div className="overflow-y-auto h-2/3">
+          {
+            allUnreadRecords.length === 0 ? <></> :
+              <NotificationList
+                notificationDataArray={allUnreadRecords} />
+          }
         </div>
         <div className="h-full min-h-[60px]">
           <Button

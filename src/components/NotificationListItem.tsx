@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import AlertIcon from "./icons/NotificationTypeIcon";
 import ReadStatusIcon from "./icons/ReadStatusIcon";
 import { NotificationObjType } from "../types/notificationTypes";
-import { notificationDrawerWidth } from "../utility/notification-utility";
 import { useMarkAsReadPost } from "../hooks/useMarkAsReadPost";
 import { useNotificationContext } from "../provider/NotificationProvider";
 
@@ -56,21 +55,24 @@ const NotificationListItem = ({
             <ListItemPrefix>
                 <Checkbox crossOrigin="" ripple={true} onClick={notificationCheckboxOnClick} />
             </ListItemPrefix>
-            <Link to={`/notification/${recordId}`} >
-                <div className={`flex gap-2 w-[${notificationDrawerWidth-200}px]`}>
+            <Link to={`/notification/${recordId}`} className={``}>
+                <div className={`flex gap-2 `}>
+                    
                     <AlertIcon notificationMsgType={msgType} />
+                    <ReadStatusIcon isRead={isRead} />
+                    
                     <Typography variant="h4" color="blue-gray" className=" truncate ">
                         {title}
                     </Typography>
                 </div>
-                <div className={`flex gap-2 w-[${notificationDrawerWidth-200}px]`}>
+                <div className={`flex gap-2`}>
                     <Typography color="blue-gray" className="truncate ">
                         {description}
                     </Typography>
                 </div>
             </Link>
             <ListItemSuffix >
-                <ReadStatusIcon isRead={isRead} />
+                <>  </>
             </ListItemSuffix>
         </ListItem>
     );

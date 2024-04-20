@@ -1,6 +1,15 @@
-# Getting Started with Create React App
+# Getting Started with Notification Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and Material Tailwind.
+
+Visit [nowa360's Github](https://github.com/nowa360/anomaly-notification-react-client) for latest update.
+
+## Screenshots
+
+<img src="./src/screenshots/anomaly-home.png" alt="Notification Home" width="500"/>
+<img src="./src/screenshots/anomaly-drawer-clicked.png" alt="Notification Drawer" width="500"/>
+<img src="./src/screenshots/anomaly-route.png" alt="Notification Route" width="500"/>
+
 
 ## Available Scripts
 
@@ -39,8 +48,6 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## TODOs
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Extend unit test

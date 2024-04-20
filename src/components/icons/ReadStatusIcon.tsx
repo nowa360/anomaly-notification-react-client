@@ -8,7 +8,7 @@ interface ReadStatusIconProps {
 const ReadStatusIcon = ({isRead}: ReadStatusIconProps) => {
     let defaultReadStatusIcon = isRead ? <IconEnvelopeOpen /> : <IconEnvelopeClose />;
     return (
-        <div className={`is-read-status`}>
+        <div className={`is-read-status pt-2`}>
             {defaultReadStatusIcon}
         </div>
     )

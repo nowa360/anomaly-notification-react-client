@@ -1,12 +1,11 @@
 import { useParams } from "react-router-dom";
-import {
-    Typography,
-} from "@material-tailwind/react";
+
+import { Typography } from "@material-tailwind/react";
 
 import AlertIcon from "./icons/NotificationTypeIcon";
+import ReadStatusIcon from "./icons/ReadStatusIcon";
 import { getNotificationByRecordId } from "../utility/notification-utility";
 import { useNotificationContext } from "../provider/NotificationProvider";
-import ReadStatusIcon from "./icons/ReadStatusIcon";
 
 const NotificationContainer = () => {
     const { recordId } = useParams();

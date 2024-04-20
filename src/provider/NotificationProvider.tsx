@@ -51,7 +51,7 @@ const NotificationProvider = ({ children }: NotificationProviderProps) => {
           // TODO: Trigger alert service here
 
           // Error here expected when backend not hooked
-          console.error('GET: Error fetching all-records data:', error)
+          console.error('GET__get_all_records: No backend hooked')
         })
         // TODO: remove finally-clause upon attaching backend
         .finally(() => {
@@ -69,7 +69,7 @@ const NotificationProvider = ({ children }: NotificationProviderProps) => {
           // TODO: Trigger alert service here
 
           // Error here expected when backend not hooked
-          console.error('GET: Error fetching unread records data:', error)
+          console.error('GET__get_all_unread_records: No backend hooked')
         })
         // TODO: remove finally-clause upon attaching backend
         .finally(() => {

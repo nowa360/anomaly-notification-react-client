@@ -22,7 +22,7 @@ const NotificationList = (
         />
     )
     return (
-        <List >
+        <List className=" max-w-[500px]">
             {notificationList}
         </List>
     );
